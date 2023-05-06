@@ -51,7 +51,7 @@ class MyTestSkill(MycroftSkill):
         the skills.log file."""
         self.log.info("There are five types of log messages: "
                       "info, debug, warning, error, and exception.")
-        self.log.info("Message parsed is " + str(message))
+        self.log.info("Message parsed is " + str(message.__dict__))
         self.speak_dialog("hello.world")
 
     def stop(self):
