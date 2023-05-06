@@ -4,13 +4,13 @@ from setuptools import setup
 from os import walk, path
 
 URL = "https://github.com/rushic24/MyMockApiSkilldemo"
-SKILL_CLAZZ = "MyMockApiSkilldemo"  # needs to match __init__.py class name
-PYPI_NAME = "ovos-skill-MyMockApiSkilldemo"  # pip install PYPI_NAME
+SKILL_CLAZZ = "MyTestSkill"  # needs to match __init__.py class name
+# PYPI_NAME = "ovos-skill-MyTestSkill"  # pip install PYPI_NAME
 
 # below derived from github url to ensure standard skill_id
 SKILL_AUTHOR, SKILL_NAME = URL.split(".com/")[-1].split("/")
 SKILL_PKG = SKILL_NAME.lower().replace('-', '_')
-PLUGIN_ENTRY_POINT = f'{SKILL_NAME.lower()}.{SKILL_AUTHOR.lower()}={SKILL_PKG}:{SKILL_CLAZZ}'
+PLUGIN_ENTRY_POINT = f'{SKILL_NAsME.lower()}.{SKILL_AUTHOR.lower()}={SKILL_PKG}:{SKILL_CLAZZ}'
 # skill_id=package_name:SkillClass
 
 
