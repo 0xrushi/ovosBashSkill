@@ -43,6 +43,13 @@ class MyTestSkill(MycroftSkill):
         It is triggered using a list of sample phrases."""
         self.speak_dialog("how.are.you")
         self.log.info("Message parsed is " + str(message))
+    
+    def process_text(self, str_text):
+        """ This is a Padatious intent handler.
+        It is triggered using a list of sample phrases.
+        The text is passed to an LLM api and the response is returned.
+        """
+        return "<-ooooooo->" + str_text + "<-ooooooo->"
 
     @intent_handler(IntentBuilder('HelloWorldIntent')
                     .require('HelloWorldKeyword'))
@@ -52,7 +59,10 @@ class MyTestSkill(MycroftSkill):
         self.log.info("There are five types of log messages: "
                       "info, debug, warning, error, and exception.")
         self.log.info("Message2 parsed is " + str(message.__dict__))
-        self.speak_dialog("hello.world")
+        received_text = message.data.get('utterance')
+        st = self.process_text(received_text)
+        
+        self.speak_dialog(st)
 
     def stop(self):
         pass
