@@ -4,7 +4,7 @@ from ovos_utils.process_utils import RuntimeRequirements
 from ovos_utils import classproperty
 
 
-class HelloWorldSkill(MycroftSkill):
+class MyTestSkill(MycroftSkill):
     def __init__(self):
         """ The __init__ method is called when the Skill is first constructed.
         It is often used to declare variables or perform setup actions, however
@@ -42,6 +42,7 @@ class HelloWorldSkill(MycroftSkill):
         """ This is a Padatious intent handler.
         It is triggered using a list of sample phrases."""
         self.speak_dialog("how.are.you")
+        self.log.info("Message parsed is " + str(message))
 
     @intent_handler(IntentBuilder('HelloWorldIntent')
                     .require('HelloWorldKeyword'))
@@ -50,6 +51,7 @@ class HelloWorldSkill(MycroftSkill):
         the skills.log file."""
         self.log.info("There are five types of log messages: "
                       "info, debug, warning, error, and exception.")
+        self.log.info("Message parsed is " + str(message))
         self.speak_dialog("hello.world")
 
     def stop(self):
@@ -57,4 +59,4 @@ class HelloWorldSkill(MycroftSkill):
 
 
 def create_skill():
-    return HelloWorldSkill()
+    return MyTestSkill()
