@@ -2,7 +2,7 @@ from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_handler
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_utils import classproperty
-from .api_scripts.rememberme    import write_to_db
+# from .api_scripts.rememberme    import write_to_db
 
 class MyTestSkill(MycroftSkill):
     def __init__(self):
@@ -51,36 +51,36 @@ class MyTestSkill(MycroftSkill):
         """
         return "<-ooooooo->" + str_text + "<-ooooooo->"
 
-    # @intent_handler(IntentBuilder('HelloWorldIntent')
-    #                 .require('HelloWorldKeyword'))
-    # def handle_hello_world_intent(self, message):
-    #     """ Skills can log useful information. These will appear in the CLI and
-    #     the skills.log file."""
-    #     self.log.info("There are five types of log messages: "
-    #                   "info, debug, warning, error, and exception.")
-    #     self.log.info("Message2 parsed is " + str(message.__dict__))
-    #     received_text = message.data.get('utterance')
-    #     st = self.process_text(received_text)
-        
-    #     self.speak_dialog(st)
-
-    @intent_handler(IntentBuilder('RememberMeIntent')
-                    .require('RememberTo'))
+    @intent_handler(IntentBuilder('HelloWorldIntent')
+                    .require('HelloWorldKeyword'))
     def handle_hello_world_intent(self, message):
-        """
-        Match the RememberTo vocab and send the text to the api
-        """
-        self.log.info("Message3 parsed is " + str(message.__dict__))
+        """ Skills can log useful information. These will appear in the CLI and
+        the skills.log file."""
+        self.log.info("There are five types of log messages: "
+                      "info, debug, warning, error, and exception.")
+        self.log.info("Message2 parsed is " + str(message.__dict__))
         received_text = message.data.get('utterance')
-        if not received_text:
-            self.speak_dialog("invalid text")
-            return
-        if write_to_db(received_text):
-            self.speak_dialog("remembered")
-            return
-        else:
-            self.speak_dialog("api error")
-            return
+        st = self.process_text(received_text)
+        
+        self.speak_dialog(st)
+
+    # @intent_handler(IntentBuilder('RememberMeIntent')
+    #                 .require('RememberTo'))
+    # def handle_hello_world_intent(self, message):
+    #     """
+    #     Match the RememberTo vocab and send the text to the api
+    #     """
+    #     self.log.info("Message3 parsed is " + str(message.__dict__))
+    #     received_text = message.data.get('utterance')
+    #     if not received_text:
+    #         self.speak_dialog("invalid text")
+    #         return
+    #     if write_to_db(received_text):
+    #         self.speak_dialog("remembered")
+    #         return
+    #     else:
+    #         self.speak_dialog("api error")
+    #         return
 
     def stop(self):
         pass
