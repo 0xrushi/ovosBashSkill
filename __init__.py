@@ -2,7 +2,7 @@ from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_handler
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_utils import classproperty
-from .api_scripts.rememberme    import write_to_db
+# from .api_scripts.rememberme    import write_to_db
 
 class MyTestSkill(MycroftSkill):
     def __init__(self):
@@ -71,16 +71,16 @@ class MyTestSkill(MycroftSkill):
         Match the RememberTo vocab and send the text to the api
         """
         self.log.info("Message3 parsed is " + str(message.__dict__))
-        received_text = message.data.get('utterance')
-        if not received_text:
-            self.speak_dialog("invalid text")
-            return
-        if write_to_db(received_text):
-            self.speak_dialog("remembered")
-            return
-        else:
-            self.speak_dialog("api error")
-            return
+        # received_text = message.data.get('utterance')
+        # if not received_text:
+        #     self.speak_dialog("invalid text")
+        #     return
+        # if write_to_db(received_text):
+        #     self.speak_dialog("remembered")
+        #     return
+        # else:
+        #     self.speak_dialog("api error")
+        #     return
 
     def stop(self):
         pass
