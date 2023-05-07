@@ -24,6 +24,6 @@ def recall_stuff(st: str):
         #     return r.json()['content']
         # else:
         #     return "something wrong in the API server"
-        return r.json()
+        return str(r.json())
     except:
         return "something wrong in the API server2"

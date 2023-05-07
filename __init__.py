@@ -95,6 +95,7 @@ class MyTestSkill(MycroftSkill):
             return
         
         result = recall_stuff(received_text)
+        self.log.info("Message42 parsed is " + str(result))
         self.speak_dialog(result)
 
     def stop(self):
