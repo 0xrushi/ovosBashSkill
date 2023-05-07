@@ -51,18 +51,18 @@ class MyTestSkill(MycroftSkill):
         """
         return "<-ooooooo->" + str_text + "<-ooooooo->"
 
-    @intent_handler(IntentBuilder('HelloWorldIntent')
-                    .require('HelloWorldKeyword'))
-    def handle_hello_world_intent(self, message):
-        """ Skills can log useful information. These will appear in the CLI and
-        the skills.log file."""
-        self.log.info("There are five types of log messages: "
-                      "info, debug, warning, error, and exception.")
-        self.log.info("Message2 parsed is " + str(message.__dict__))
-        received_text = message.data.get('utterance')
-        st = self.process_text(received_text)
+    # @intent_handler(IntentBuilder('HelloWorldIntent')
+    #                 .require('HelloWorldKeyword'))
+    # def handle_hello_world_intent(self, message):
+    #     """ Skills can log useful information. These will appear in the CLI and
+    #     the skills.log file."""
+    #     self.log.info("There are five types of log messages: "
+    #                   "info, debug, warning, error, and exception.")
+    #     self.log.info("Message2 parsed is " + str(message.__dict__))
+    #     received_text = message.data.get('utterance')
+    #     st = self.process_text(received_text)
         
-        self.speak_dialog(st)
+    #     self.speak_dialog(st)
 
     @intent_handler(IntentBuilder('RememberMeIntent')
                     .require('RememberTo'))
