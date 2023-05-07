@@ -17,6 +17,7 @@ def recall_stuff(st: str):
     encoded_query = urllib.parse.quote(st)
     try:
         r = requests.get(f"{url}?query={encoded_query}")
+        print("request sent", r.json())
         if r["status_code"] == 200:
             if r.json()['content'] == "null" or r.json()['content'] == None:
                 return "I dont know"
