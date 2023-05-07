@@ -2,7 +2,7 @@ from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_handler
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_utils import classproperty
-from .api_scripts.rememberme    import write_to_db
+from api_scripts.rememberme    import write_to_db
 
 class MyTestSkill(MycroftSkill):
     def __init__(self):
