@@ -44,31 +44,14 @@ class MyTestSkill(MycroftSkill):
         self.speak_dialog("how.are.you")
         self.log.info("Message parsed is " + str(message))
     
-    def process_text(self, str_text):
-        """ This is a Padatious intent handler.
-        It is triggered using a list of sample phrases.
-        The text is passed to an LLM api and the response is returned.
-        """
-        return "<-ooooooo->" + str_text + "<-ooooooo->"
-
-    @intent_handler(IntentBuilder('HelloWorldIntent')
-                    .require('HelloWorldKeyword'))
-    def handle_hello_world_intent(self, message):
-        """ Skills can log useful information. These will appear in the CLI and
-        the skills.log file."""
-        self.log.info("There are five types of log messages: "
-                      "info, debug, warning, error, and exception.")
-        self.log.info("Message2 parsed is " + str(message.__dict__))
-        received_text = message.data.get('utterance')
-        st = self.process_text(received_text)
-        
-        self.speak_dialog(st)
-
     @intent_handler(IntentBuilder('RememberMeIntent')
                     .require('RememberTo'))
-    def handle_hello_world_intent2(self, message):
+    def remember_me_intent(self, message):
         """
-        Match the RememberTo vocab and send the text to the api
+        Match the RememberTo vocab and 
+        trigger to send the text to the api
+
+        e.g remember I am keeping the keys in the bedroom drawer
         """
         self.log.info("Message3 parsed is " + str(message.__dict__))
         received_text = message.data.get('utterance')
@@ -84,18 +67,17 @@ class MyTestSkill(MycroftSkill):
         
     @intent_handler(IntentBuilder('RecallIntent')
                     .require('RecallKeyword'))
-    def handle_hello_world_intent3(self, message):
+    def recall_intent(self, message):
         """
-        Match the RememberTo vocab and send the text to the api
+        Match the recall vocab and send query to the api to search the database for text
+
         """
-        self.log.info("Message4 parsed is " + str(message.__dict__))
         received_text = message.data.get('utterance')
         if not received_text:
             self.speak_dialog("invalid text")
             return
         
         result = recall_stuff(received_text)
-        self.log.info("Message42 parsed is " + str(result))
         self.speak_dialog(result)
 
     def stop(self):
