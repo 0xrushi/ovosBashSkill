@@ -2,7 +2,7 @@ from adapt.intent import IntentBuilder
 from mycroft import MycroftSkill, intent_handler
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_utils import classproperty
-from api_scripts.rememberme    import write_to_db, recall_stuff
+from api_scripts.bashhandler import SSHExecutor
 
 class MyTestSkill(MycroftSkill):
     def __init__(self):
@@ -12,6 +12,7 @@ class MyTestSkill(MycroftSkill):
         """
         super().__init__()
         self.learning = True
+        self.executor = SSHExecutor('doraemon')
 
     @classproperty
     def runtime_requirements(self):
@@ -44,41 +45,59 @@ class MyTestSkill(MycroftSkill):
         self.speak_dialog("how.are.you")
         self.log.info("Message parsed is " + str(message))
     
-    @intent_handler(IntentBuilder('RememberMeIntent')
-                    .require('RememberTo'))
-    def remember_me_intent(self, message):
+    @intent_handler('RunCommand.intent')
+    def handle_how_are_you_intent(self, message):
+        """ 
+        everything else is a command
         """
-        Match the RememberTo vocab and 
-        trigger to send the text to the api
-
-        e.g remember I am keeping the keys in the bedroom drawer
+        self.log.info("Message parsed is " + str(message))
+        received_text = message.data.get('utterance')
+        if not received_text:
+            self.speak_dialog("invalid text")
+            return
+        # Establish the SSH session
+        self.executor.connect()
+        self.executor.run_commands(received_text)
+        self.executor.close()
+    
+    @intent_handler(IntentBuilder('CurrentProfileIntent')
+                    .require('Profilevocab'))
+    def get_profile(self, message):
+        """
+        return the user's profile
         """
         self.log.info("Message3 parsed is " + str(message.__dict__))
         received_text = message.data.get('utterance')
         if not received_text:
             self.speak_dialog("invalid text")
             return
-        if write_to_db(received_text):
-            self.speak_dialog("remembered")
-            return
-        else:
-            self.speak_dialog("api error")
-            return
-        
-    @intent_handler(IntentBuilder('RecallIntent')
-                    .require('RecallKeyword'))
-    def recall_intent(self, message):
-        """
-        Match the recall vocab and send query to the api to search the database for text
+        # Get the current profile
+        current_profile = self.executor.get_profile()
+        self.speak_dialog("current profile is " + current_profile)
 
+    @intent_handler(IntentBuilder('SwitchProfileIntent')
+                    .require('Profilevocab'))
+    def switch_profile(self, message):
         """
+        Switch the user's profile
+        """
+        self.log.info("Message3 parsed is " + str(message.__dict__))
         received_text = message.data.get('utterance')
         if not received_text:
             self.speak_dialog("invalid text")
             return
-        
-        result = recall_stuff(received_text)
-        self.speak_dialog(result)
+        # Set a new profile
+        self.executor.set_profile(received_text)
+
+        self.speak_dialog("switched profile successfully")
+        # Establish the SSH session
+        # executor.connect()
+
+        # # Run commands
+        # executor.run_commands()
+
+        # # Close the SSH session
+        # executor.close()
 
     def stop(self):
         pass
